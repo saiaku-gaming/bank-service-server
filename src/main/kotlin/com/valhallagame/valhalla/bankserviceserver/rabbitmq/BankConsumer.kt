@@ -1,24 +1,20 @@
-package com.valhallagame.valhalla.currencyserviceserver.rabbitmq
+package com.valhallagame.valhalla.bankserviceserver.rabbitmq
 
 import com.valhallagame.common.rabbitmq.NotificationMessage
-import com.valhallagame.valhalla.currencyserviceserver.service.CurrencyService
-import com.valhallagame.valhalla.currencyserviceserver.service.LockedCurrencyService
+import com.valhallagame.valhalla.bankserviceserver.service.BankItemService
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class CurrencyConsumer
+class BankConsumer
     @Autowired
     constructor(
-            private val currencyService: CurrencyService,
-            private val lockedCurrencyService: LockedCurrencyService
+            private val bankItemService: BankItemService
     ){
-
-    @RabbitListener(queues = ["#{currencyCharacterDeleteQueue.name}"])
+    @RabbitListener(queues = ["#{bankCharacterDeleteQueue.name}"])
     fun receivedCharacterDeleteNotification(notificationMessage: NotificationMessage) {
         val characterName = notificationMessage.data["characterName"] as String
-        currencyService.deleteCurrencyByCharacterName(characterName)
-        lockedCurrencyService.deleteLockedCurrencyByCharacterName(characterName)
+        bankItemService.deleteBankItemByCharacterName(characterName)
     }
 }

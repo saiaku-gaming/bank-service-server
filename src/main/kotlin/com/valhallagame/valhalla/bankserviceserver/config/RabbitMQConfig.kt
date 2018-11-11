@@ -1,4 +1,4 @@
-package com.valhallagame.valhalla.currencyserviceserver.config
+package com.valhallagame.valhalla.bankserviceserver.config
 
 import com.valhallagame.common.rabbitmq.RabbitMQRouting
 import org.springframework.amqp.core.Binding
@@ -17,11 +17,11 @@ class RabbitMQConfig {
     fun characterExchange() = DirectExchange(RabbitMQRouting.Exchange.CHARACTER.name)
 
     @Bean
-    fun currencyCharacterDeleteQueue() = Queue("currencyCharacterDeleteQueue")
+    fun bankCharacterDeleteQueue() = Queue("bankCharacterDeleteQueue")
 
     @Bean
-    fun bindingCharacterDelete(characterExchange: DirectExchange, currencyCharacterDeleteQueue: Queue): Binding
-            = BindingBuilder.bind(currencyCharacterDeleteQueue).to(characterExchange).with(RabbitMQRouting.Character.DELETE)
+    fun bindingCharacterDelete(characterExchange: DirectExchange, bankCharacterDeleteQueue: Queue): Binding
+            = BindingBuilder.bind(bankCharacterDeleteQueue).to(characterExchange).with(RabbitMQRouting.Character.DELETE)
 
     @Bean
     fun jacksonConverter() = Jackson2JsonMessageConverter()

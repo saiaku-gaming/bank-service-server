@@ -19,7 +19,7 @@ class BankApp {
 
     @Bean
     fun customizer() = WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> {
-        it.setPort(DefaultServicePortMappings.CURRENCY_SERVICE_PORT)
+        it.setPort(DefaultServicePortMappings.BANK_SERVICE_PORT)
     }
 }
 
