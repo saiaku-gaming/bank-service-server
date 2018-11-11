@@ -24,7 +24,7 @@ class BankItemRepositoryTest {
     private lateinit var bankItemRepository: BankItemRepository
 
     @Test
-    fun findCurrencyByCharacterNameAndType() {
+    fun deleteBankItemByCharacterName() {
         val bankItem1 = BankItem(characterName = "nisse", itemName = "sword", positionX = 0, positionY = 0)
         val bankItem2 = BankItem(characterName = "hult", itemName = "sword", positionX = 0, positionY = 0)
         val bankItem3 = BankItem(characterName = "nisse", itemName = "apple", positionX = 0, positionY = 1)
@@ -46,5 +46,29 @@ class BankItemRepositoryTest {
 
         assertEquals(2, items.size)
         assertFalse(items.any { it.characterName == "nisse" })
+    }
+
+    @Test
+    fun deleteBankItemByPosition() {
+        val bankItem1 = BankItem(characterName = "nisse", itemName = "sword", positionX = 0, positionY = 0)
+        val bankItem2 = BankItem(characterName = "hult", itemName = "sword", positionX = 0, positionY = 0)
+        val bankItem3 = BankItem(characterName = "nisse", itemName = "apple", positionX = 0, positionY = 1)
+        val bankItem4 = BankItem(characterName = "nisse", itemName = "bow", positionX = 0, positionY = 2)
+        val bankItem5 = BankItem(characterName = "lisa", itemName = "sword", positionX = 0, positionY = 0)
+
+        entityManager.persist(bankItem1)
+        entityManager.persist(bankItem2)
+        entityManager.persist(bankItem3)
+        entityManager.persist(bankItem4)
+        entityManager.persist(bankItem5)
+        entityManager.flush()
+
+        val deletedRows = bankItemRepository.deleteBankItemByPosition("nisse", 0, 1)
+
+        assertEquals(1, deletedRows)
+
+        val items = bankItemRepository.findAll()
+
+        assertEquals(4, items.size)
     }
 }
