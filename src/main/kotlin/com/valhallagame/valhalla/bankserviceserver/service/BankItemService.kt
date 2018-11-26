@@ -16,6 +16,16 @@ class BankItemService {
     fun getBankItems(characterName: String): List<BankItem>
             = bankItemRepository.getBankItemsByCharacterName(characterName)
 
+    fun setBankContents(characterName: String, bankItems: List<BankItemWrapper>): List<BankItem> {
+        bankItemRepository.deleteBankItemByCharacterName(characterName)
+        val createdItems = mutableListOf<BankItem>()
+        bankItems.forEach {
+            createdItems.add(createBankItem(characterName, it.itemName, it.positionX, it.positionY))
+        }
+
+        return createdItems
+    }
+
     fun createBankItem(characterName: String, itemName: String, positionX: Int, positionY: Int): BankItem
             = bankItemRepository.save(
                 BankItem(
@@ -28,4 +38,10 @@ class BankItemService {
 
     fun deleteBankItemByPosition(characterName: String, positionX: Int, positionY: Int): Int
             = bankItemRepository.deleteBankItemByPosition(characterName, positionX, positionY)
+
+    data class BankItemWrapper(
+        val itemName: String,
+        val positionX: Int,
+        val positionY: Int
+    )
 }

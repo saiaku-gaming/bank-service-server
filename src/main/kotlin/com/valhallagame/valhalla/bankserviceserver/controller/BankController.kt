@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.valhallagame.bankserviceclient.message.AddBankItemParameter
 import com.valhallagame.bankserviceclient.message.DeleteBankItemParameter
 import com.valhallagame.bankserviceclient.message.GetBankItemsParameter
+import com.valhallagame.bankserviceclient.message.SetBankItemContentsParameter
 import com.valhallagame.common.JS
 import com.valhallagame.valhalla.bankserviceserver.service.BankItemService
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,5 +36,12 @@ class BankController {
     @PostMapping("delete-bank-item")
     @ResponseBody
     fun deleteBankItem(@Valid @RequestBody input: DeleteBankItemParameter): ResponseEntity<JsonNode>
-            = JS.message(HttpStatus.OK, bankItemService.deleteBankItemByPosition(input.characterName, input.positionX, input.positionY))
+            = JS.message(HttpStatus.OK, "Deleted ${bankItemService.deleteBankItemByPosition(input.characterName, input.positionX, input.positionY)} items")
+
+    @PostMapping("/set-bank-contents")
+    @ResponseBody
+    fun setBankContents(@Valid @RequestBody input: SetBankItemContentsParameter): ResponseEntity<JsonNode>
+            = JS.message(HttpStatus.OK, bankItemService.setBankContents(input.characterName, input.items.map {
+        BankItemService.BankItemWrapper(it.itemName, it.positionX, it.positionY)
+    }))
 }
