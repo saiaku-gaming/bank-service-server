@@ -39,7 +39,7 @@ class BankController {
     @ResponseBody
     fun addBankItem(@Valid @RequestBody input: AddBankItemParameter): ResponseEntity<JsonNode> {
         logger.info("Add Bank Item called with {}", input)
-        return JS.message(HttpStatus.OK, bankItemService.createBankItem(input.characterName, input.itemName, input.positionX, input.positionY))
+        return JS.message(HttpStatus.OK, bankItemService.createBankItem(input.characterName, input.itemName, input.positionX, input.positionY, input.metaData))
     }
 
     @PostMapping("delete-bank-item")
@@ -54,7 +54,7 @@ class BankController {
     fun setBankContents(@Valid @RequestBody input: SetBankItemContentsParameter): ResponseEntity<JsonNode> {
         logger.info("Set Bank Item called with {}", input)
         return JS.message(HttpStatus.OK, bankItemService.setBankContents(input.characterName, input.items.map {
-            BankItemService.BankItemWrapper(it.itemName, it.positionX, it.positionY)
+            BankItemService.BankItemWrapper(it.itemName, it.positionX, it.positionY, it.metaData)
         }))
     }
 }

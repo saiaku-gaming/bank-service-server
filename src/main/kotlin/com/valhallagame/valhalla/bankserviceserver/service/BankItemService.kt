@@ -32,21 +32,22 @@ class BankItemService {
         bankItemRepository.deleteBankItemByCharacterName(characterName)
         val createdItems = mutableListOf<BankItem>()
         bankItems.forEach {
-            createdItems.add(createBankItem(characterName, it.itemName, it.positionX, it.positionY))
+            createdItems.add(createBankItem(characterName, it.itemName, it.positionX, it.positionY, it.metaData))
         }
 
         return createdItems
     }
 
-    fun createBankItem(characterName: String, itemName: String, positionX: Int, positionY: Int): BankItem {
-        logger.info("Creating bank item for {} with name {} and position X: {}, Y: {}", characterName, itemName, positionX, positionY)
+    fun createBankItem(characterName: String, itemName: String, positionX: Int, positionY: Int, metaData: String?): BankItem {
+        logger.info("Creating bank item for {} with name {} and position X: {}, Y: {}, Meta Data {}", characterName, itemName, positionX, positionY, metaData)
 
         return bankItemRepository.save(
                 BankItem(
                         characterName = characterName,
                         itemName = itemName,
                         positionX = positionX,
-                        positionY = positionY
+                        positionY = positionY,
+                        metaData = metaData
                 )
         )
     }
@@ -59,6 +60,7 @@ class BankItemService {
     data class BankItemWrapper(
         val itemName: String,
         val positionX: Int,
-        val positionY: Int
+        val positionY: Int,
+        val metaData: String?
     )
 }
