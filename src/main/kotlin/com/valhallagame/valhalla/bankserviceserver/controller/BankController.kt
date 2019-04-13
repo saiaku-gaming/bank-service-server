@@ -46,7 +46,8 @@ class BankController {
     @ResponseBody
     fun deleteBankItem(@Valid @RequestBody input: DeleteBankItemParameter): ResponseEntity<JsonNode> {
         logger.info("Delete Bank Item called with {}", input)
-        return JS.message(HttpStatus.OK, "Deleted ${bankItemService.deleteBankItemByPosition(input.characterName, input.positionX, input.positionY)} items")
+        return if(bankItemService.deleteBankItemByPosition(input.characterName, input.positionX, input.positionY) > 0) JS.message(HttpStatus.OK, "Item deleted")
+            else JS.message(HttpStatus.NOT_FOUND, "Unable to find item to delete")
     }
 
     @PostMapping("/set-bank-contents")
