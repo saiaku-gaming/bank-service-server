@@ -157,7 +157,7 @@
                     <imageTags>
                         <imageTag>latest</imageTag>
                     </imageTags>
-                    <baseImage>frolvlad/alpine-oraclejdk8:slim</baseImage>
+                    <baseImage>frolvlad/alpine-java:jdk8-slim</baseImage>
                     <entryPoint>["java", "-Xmx256m", "-Xss512k", "-Xms32m", "-jar", "/${project.build.finalName}.jar"]
                     </entryPoint>
                     <resources>
