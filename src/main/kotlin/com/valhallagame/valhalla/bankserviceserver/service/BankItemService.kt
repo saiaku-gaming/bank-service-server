@@ -41,6 +41,8 @@ class BankItemService {
     fun createBankItem(characterName: String, itemName: String, positionX: Int, positionY: Int, metaData: String?): BankItem {
         logger.info("Creating bank item for {} with name {} and position X: {}, Y: {}, Meta Data {}", characterName, itemName, positionX, positionY, metaData)
 
+        deleteBankItemByPosition(characterName, positionX, positionY)
+
         return bankItemRepository.save(
                 BankItem(
                         characterName = characterName,
