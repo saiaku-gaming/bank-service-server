@@ -155,7 +155,7 @@
                             <alias>main</alias>
                             <name>registry.valhalla-game.com/${project.artifactId}</name>
                             <build>
-                                <from>adoptopenjdk/openjdk13:alpine-slim</from>
+                                <from>adoptopenjdk/openjdk13-openj9:alpine-slim</from>
                                 <entryPoint>
                                     <arg>java</arg>
                                     <arg>-Xmx256m</arg>
