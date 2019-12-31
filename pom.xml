@@ -158,7 +158,7 @@
                                 <from>adoptopenjdk/openjdk13-openj9:alpine-slim</from>
                                 <entryPoint>
                                     <arg>java</arg>
-                                    <arg>-Xmx256m</arg>
+                                    <arg>-Xmx128m</arg>
                                     <arg>-Xss512k</arg>
                                     <arg>-Xms32m</arg>
                                     <arg>-jar</arg>
